@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;}
+ body{
+    text-align :center;
+ }
+.user-detail {
+    height: auto;
+    border: 2px solid #f1f1f1;
+    padding: 16px;
+    background-color: white;
+    width: auto;}
+input{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+
+button:hover {
+  background-color:#3d3c3c;}
+
+div.user-detail{
+    margin: auto;
+}
+body{            
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    }
+h2{
+    text-align: center;
+}
+
+button.b1{
+            font-size:15px;
+            width: 45%;
+            padding: 15px;
+            background-color: #ff1616;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+button.b2{
+            font-size:15px;
+            width: 45%;
+            padding: 15px;
+            background-color: #55ff06;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+div.Ltext{
+    text-align:left;
+    
+}
+p{
+    font-size: 37px;
+}
+
+</style>
+</head>
+<body>
+<!--====form section start====-->
+<div class="user-detail">
+    <div class="Ltext">
+    <h2>ข้อมูลพนักงาน</h2>
+    <form>
+        <%
+        if(userData.length!=0){
+        var i=1;
+        userData.forEach(function(data){
+        %>
+            <p2>ชื่อ: <%=data.name%> <%=data.surname%></p> 
+            <p3>ชื่อภาษาอังกฤษ:  <%=data.name_eng%> <%=data.surname_eng%></p>  
+            <p5>รหัสพนักงาน:  <%=data.personnel_id%></p>
+            <p6>แผนก:  <%=data.department%></p> 
+            <p7>ตำแหน่ง:  <%=data.position%></p> 
+            <p8>Email:  <%=data.email%></p> 
+            <p9>เบอร์โทรศัพท์:  <%=data.tel_number%></p> 
+            <p10>ไอดีไลน์:  <%=data.line_id%></p>
+                <%  i++; }) %>
+                <% } else{ %>
+                    <div class="not-found">
+                        <p> Data not found</p>
+                    </div>
+                <% } %>
+            </form>
+            </div>  
+        <br>
+        <button class="b1" onclick="deleted()">ยกเลิก</button> &puncsp; &puncsp;
+        <button class="b2" onclick="window.location.href='/admin/register'">เพิ่มข้อมูล</button>
+    </div>
+
+<%
+if(userData.length!=0){
+var i=1;
+userData.forEach(function(data){
+%>
+<script>
+    
+    function deleted() {
+        var txt;
+            var r = confirm("กรุณายืนยันการยกเลิกเป็นพนักงาน");
+         if (r == true) {
+    window.location.href='/admin/disable?Regis_ID=<%=data.Regis_ID%>'
+  } 
+        else {
+    txt = "You pressed Cancel!";
+  }
+
+    }
+
+</script>
+<%  i++; }) %>
+<% } else{ %>
+    <div class="not-found">
+        <p> Data not found</p>
+    </div>
+<% } %>
+<!--====form section start====-->
+</body>
+</html>

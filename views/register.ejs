@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;}
+ 
+.user-detail {
+    height: auto;
+    border: 2px solid #f1f1f1;
+    padding: 16px;
+    background-color: white;
+    width: auto;}
+input{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;}
+button[type=submit] {
+    background-color: #0099ff;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 20px;}
+label{
+  font-size: 17px;}
+button[type=submit]:hover {
+  background-color:#3d3c3c;}
+
+div.user-detail{
+    margin: auto;
+}
+body{            
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    }
+h2{
+    text-align: center;
+}
+label.head-regis-system{
+    font-size: 20px
+}
+select{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+
+  
+</style>
+</head>
+<body>
+<!--====form section start====-->
+<div class="user-detail">
+    <h2>เพิ่มข้อมูลพนักงานใหม่</h2>
+    <form action="/admin/insert" method="POST">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" placeholder="ชื่อ" name="fname" required maxlength="30">
+          <input type="text" placeholder="นามสกุล" name="lname" required maxlength="30">
+          <label>ชื่อ-นามสกุล ภาษาอังกฤษ</label>
+          <input type="text" placeholder="ชื่อ ภาษาอังกฤษ" name="fname_en" required maxlength="30">
+          <input type="text" placeholder="นามสกุล ภาษาอังกฤษ" name="lname_en" required maxlength="30">
+          <label>รหัสพนักงาน</label>
+          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6">
+          <label>อีเมล</label>
+          <input type="text" placeholder="อีเมล" name="email" required maxlength="50">
+          <label>ไอดีไลน์</label>
+          <input type="text" placeholder="ไอดีไลน์" name="line_id" required maxlength="20">
+          <label>เบอร์โทรศัพท์</label>
+          <input type="text" placeholder="เบอร์โทรศัพท์" name="tel" required maxlength="10">
+          <label>ตำแหน่ง</label>
+          <select name="position" id="position">
+            <option value="Manager">Manager</option>
+            <option value="Personal">Personal</option>
+        </select>
+          <label>แผนก</label>
+          <select name="department" id="department">
+            <option value="IT">IT</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Admin">Admin</option>
+            <option value="Deverloper">Deverloper</option>
+        </select>
+           <br>
+           <br>
+          <label class="head-regis-system">*ลงทะเบียนเพื่อเข้าใช้งานระบบ</label>
+           </br>
+           <br>
+          <label>ชื่อผู้ใช้งาน</label>
+          <input type="text" placeholder="ชื่อผู้ใช้งาน" name="username" required maxlength="30">
+          <label>รหัสผ่าน</label>   
+          <input type="password" placeholder="รหัสผ่าน" name="password" required maxlength="100">
+          <label>ยืนยันรหัสผ่าน</label>   
+          <input type="password" placeholder="ยืนยันรหัสผ่าน" name="password2" required maxlength="100">
+          <label>สิทธิ์</label>
+          <select name="permission" id="permission">
+              <option value="general">General</option>
+              <option value="admin">Admin</option>
+          </select>
+
+          <button type="submit" onclick="return confirm('จะทำการลงทะเบียนหรือไหม่')">ตกลง</button>
+        </form>
+
+        </div>
+
+<script>
+
+</script>
+<!--====form section start====-->
+</body>
+</html>

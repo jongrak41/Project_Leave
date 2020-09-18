@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;}
+ body{
+    text-align :center;
+ }
+.user-detail {
+    height: auto;
+    border: 2px solid #f1f1f1;
+    padding: 16px;
+    background-color: white;
+    width: auto;
+        }
+input{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+
+button:hover {
+  background-color:#3d3c3c;}
+
+div.user-detail{
+    margin: auto;
+}
+body{            
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    }
+h1{
+    text-align: center;
+}
+
+button.b1{
+            font-size:15px;
+            width: 45%;
+            padding: 15px;
+            background-color: #ff1616;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+button.b2{
+            font-size:15px;
+            width: 45%;
+            padding: 15px;
+            background-color: #55ff06;
+            border: 0;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: bold;
+            color: #ffffff;
+        }
+div.Ltext{
+    text-align:left;
+    font-size: 18px;
+}
+div.number{
+  text-align:right;
+}
+/* p{
+    font-size: 37px;
+} */
+
+</style>
+</head>
+<body>
+  
+  <div class="user-detail">
+    <div class="number">
+      <p1>เลขที่ <%=leave_idto%></p>
+    </div>
+    <h1>ประวัติการลา</h1> <br>
+          <div class="Ltext">
+            <form>
+            <p2>ชื่อ : <%=name%> <%=surname%></p>
+            <p14>วันที่ลา : <%=leave_date%></p>
+            <p14>ถึงวันที่ : <%=to_date%></p>
+            <p13>หมายเหตุ : <%=category%> เนื่องจาก <%=cause%></p> <br>
+            <p>*จำนวนวันที่ลาไปทั้งหมด*</p>
+            <p11>#ลากิจ <%=on_leave%> วัน (7 วัน)</p>
+            <p11>#ลาป่วย <%=sick_leave%> วัน (30 วัน)</p>
+            <p11>#ลาพักร้อน <%=Vacation%> วัน (7 วัน)</p>
+            <p12>#ลาคลอด <%=Maternity_leave%> วัน (90 วัน)</p>
+            <p11>#ขาดงาน <%=Absent%> วัน (<%=Absent%> วัน)</p> <br>
+            </form>
+             </div>  
+        </div>
+        <br>
+
+  
+
+<%
+if(userData.length!=0){
+var i=1;
+userData.forEach(function(data){
+%>  
+<script>    
+    function approve() {
+        var txt;
+            var r = confirm("กรุณายืนยันการอุมัติการลา");
+         if (r == true) {
+    window.location.href='/admin/approve?leave_id=<%=data.leave_id%>'  
+  } 
+        else {
+    txt = "You pressed Cancel!";
+  }
+    }
+
+    function non_approve() {
+        var txt;
+            var r = confirm("กรุณายืนยันการอุมัติการลา");
+         if (r == true) {
+    window.location.href='/admin/non_approve?leave_id=<%=data.leave_id%>'
+  } 
+        else {
+    txt = "You pressed Cancel!";
+  }
+    }
+
+</script>
+<%  i++; }) %>
+<% } else{ %>
+    <div class="not-found">
+        <p> Data not found</p>
+    </div>
+<% } %>
+<!--====form section start====-->
+</body>
+</html>

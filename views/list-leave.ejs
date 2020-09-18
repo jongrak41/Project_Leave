@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body{
+    text-align: center; 
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    margin:auto;
+    
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid rgb(207, 207, 207);
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+
+
+div.textbox{                
+  text-align: center;
+  width: 98%;
+  height: auto;
+  background-color: #ffffff;
+  border: 1px solid #180000;
+  margin: auto;
+              }
+              
+input.b1{
+  font-size:20px;
+  width: 30%;
+  padding: 15px;
+  background-color: #ff1616;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  }
+
+</style>
+</head>
+<body>
+    <form method="POST">
+        <div class="textbox">
+            <h2>อนุมัติการลา</h2>   
+            <%
+            if(userData.length!=0){
+            var i=1;
+            userData.forEach(function(data){
+            %>
+            <ul id="myUL">
+            <li><a href="/admin/viewleave?leave_id=<%=data.leave_id %>"><%=data.name%> <%=data.surname%> <%=data.category%> วันที่ <%=data.submis_date%></a></li>
+            </ul>
+            <%  i++; }) %>
+            <% } else{ %>
+                <div class="not-found">
+                    <p> Data not found</p>
+                </div>
+            <% } %>
+
+</div>
+</form>
+<br>
+<!-- <input class="b1" type="button" value="ลบข้อมูล" onclick="de()"> &nbsp; -->
+
+<script>
+    function de(){
+  if (confirm("คุณแน่ใจหรือไม่")) {
+txt = "ลบ";
+location.replace("http://localhost:8080/Menu");
+    } else {
+txt = "ยกเลิก";
+
+   }
+}
+</script>
+
+</body>
+</html>
+ 
+
