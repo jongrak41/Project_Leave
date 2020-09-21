@@ -4,9 +4,11 @@ var requestG = require('request');
 var bcrypt = require('bcrypt-nodejs');
 var mysql = require('mysql');
 var dbconfig = require('../config/database');
+const e = require('express');
 var connection = mysql.createConnection(dbconfig.connection);
 
 connection.query('USE ' + dbconfig.database);
+
 
 function Linenotify (messageG){   //ฟังชั่น linenotify
     var token ='c6JHAEwgfdpmmHzUBciocLXdhNfwSDLWGrfJuBAL5mX'
@@ -29,7 +31,7 @@ function Linenotify (messageG){   //ฟังชั่น linenotify
   }
 
 router.get('/register', isLoggedIn,function(req, res, next) {
-    res.render('register');
+    res.render('register',{message: req.flash('CheakRePassword')});
   });
 
 router.post('/insert', function(req, res, next){
@@ -45,23 +47,59 @@ router.post('/insert', function(req, res, next){
     var department = req.body.department;
     var username = req.body.username;
     var password = req.body.password;
+    var Re_password = req.body.Re_password;
     var permission = req.body.permission;
+ 
+    var sql=`SELECT * FROM register where name = ? and surname = ?`;
+    connection.query(sql,[fname,lname], function (err, results) {
+      if(results.length == 0){
+        var sql=`SELECT * FROM register where name_eng = ? and surname_eng = ?`;
+        connection.query(sql,[fname_en,lanem_en], function (err, results) {
+            if(results.length == 0){
+              var sql=`SELECT * FROM register where username = ?`;
+              connection.query(sql,[username], function (err, results) {
+                if(results.length == 0){
+                    if(password == Re_password){
+                      password = bcrypt.hashSync(password, null, null)
+                      var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, reg_status)`
+                      +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), 'enable')`;
+                      connection.query(sql,function (err, data) {
+                        if (err) throw err;
+                              console.log("record inserted");
+                          });
+                      Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
+                      res.send(
+                        '<html>'   
+                          +'<script>'
+                          +'alert("บันทึกสำเร็จ");'
+                          +'location.replace("/admin/register")'  
+                        +'</script>'
+                      +'</html>')
+                    }
+                    else{
+                      req.flash('CheakRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                      res.redirect('/admin/register') 
+                    }
+                }
+                else{
+                  req.flash('CheakRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
+                  res.redirect('/admin/register') 
+                }
+              })
+            }
+            else{
+              req.flash('CheakRePassword','ชื่ออังกฤษซ้ำกรุณาเปลี่ยน')
+              res.redirect('/admin/register') 
+            }
+        })
 
-    password = bcrypt.hashSync(password, null, null)
-    var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, reg_status)`
-    +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), 'enable')`;
-    connection.query(sql,function (err, data) {
-       if (err) throw err;
-            console.log("record inserted");
-        });
-    Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
-    res.send(
-      '<html>'   
-        +'<script>'
-        +'alert("บันทึกสำเร็จ");'
-        +'location.replace("/admin/register")'  
-       +'</script>'
-    +'</html>')
+      }
+      else{
+        req.flash('CheakRePassword','ชื่อซ้ำกรุณาเปลี่ยน')
+        res.redirect('/admin/register') 
+      }
+    })
+    
   })
 
 

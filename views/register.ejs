@@ -2,6 +2,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style>
 * {
   box-sizing: border-box;}
@@ -70,6 +72,9 @@ select{
 <div class="user-detail">
     <h2>เพิ่มข้อมูลพนักงานใหม่</h2>
     <form action="/admin/insert" method="POST">
+      <% if(message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div> 
+       <% } %>
           <label>ชื่อ-นามสกุล</label>
           <input type="text" placeholder="ชื่อ" name="fname" required maxlength="30">
           <input type="text" placeholder="นามสกุล" name="lname" required maxlength="30">
@@ -106,7 +111,7 @@ select{
           <label>รหัสผ่าน</label>   
           <input type="password" placeholder="รหัสผ่าน" name="password" required maxlength="100">
           <label>ยืนยันรหัสผ่าน</label>   
-          <input type="password" placeholder="ยืนยันรหัสผ่าน" name="password2" required maxlength="100">
+          <input type="password" placeholder="ยืนยันรหัสผ่าน" name="Re_password" required maxlength="100">
           <label>สิทธิ์</label>
           <select name="permission" id="permission">
               <option value="general">General</option>
