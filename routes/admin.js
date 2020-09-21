@@ -282,7 +282,29 @@ connection.query(sql,function (err, data) {
     Linenotify(messageG =`ไม่ทำการอนุมัติรายการลา เลขที่ ${req.query.leave_id} กรุณาติดต่อหัวหน้าฝ่าย`)
 })
  
+router.get('/chengepass',function(req,res,next){
+  res.render('chengepass')
+})
 
+router.post('/chengepassword',function(req,res,next){
+  var username = req.body.username
+  var password = req.body.password
+  password = bcrypt.hashSync(password, null, null)
+  var sql=`UPDATE register SET password = '${password}' WHERE username = '${username}'`; 
+  connection.query(sql,req.query.leave_id, function (err, data, fields) {
+    if (err) throw err;
+    else{
+      res.send(
+        '<html>'   
+          +'<script>'
+          +'alert("เปลี่ยนรหัสสำเร็จ");'
+          +'location.replace("/")'  
+         +'</script>'
+      +'</html>')
+      console.log('Chenge Success')
+    }
+  })
+})
 
 
 function isLoggedIn(req, res, next){

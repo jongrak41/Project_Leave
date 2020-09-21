@@ -2,12 +2,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Munu Admin</title>
     <body>
-        <h1></h1><br>
+        <div class="nametext"><p10 class="name">นาย <%= user.name %> <%= user.surname %></p10></div>
 
         <div>
         <h1>เลือกเมนู</h1>
         <p></p>
-
         <input type="button" value="ลางาน" onclick="window.location.href='/user/leave'"> <br><br>
         <input type="button" value="ดูประวัติการลา" onclick="window.location.href='/user/list-history'"><br><br>
         <input type="button" value="เปลี่ยนรหัสผ่าน(ยังไม่เปิดใช้งาน)" onclick="window.location.href='http://localhost:8080/PageRegister' "> <br><br>
@@ -61,7 +60,10 @@
         p{
             font-size: 50px;
         }
-     
+        
+        div.nametext{
+            text-align: right;
+        }
         
     </style>
 
