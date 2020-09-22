@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router(); 
 var requestG = require('request');
+var bcrypt = require('bcrypt-nodejs');
 var mysql = require('mysql');
 var dbconfig = require('../config/database');
 var connection = mysql.createConnection(dbconfig.connection);
@@ -167,6 +168,43 @@ router.get('/viewhistory',isLoggedIn,function(req, res, next){
 })
 })
 
+router.get('/changepass',isLoggedIn,function(req,res,next){
+  res.render('changepass',{user:req.user, message: req.flash('CheckPassword')})
+})
+
+router.post('/changepassword',function(req,res,next){
+  var username = req.user.username
+  var Current_password = req.body.Current_password
+  var password = req.body.password
+  var conpassword = req.body.Con_password
+  var sql = `select * from register where username = '${username}'`
+  connection.query(sql,function(err,rows){
+    if(bcrypt.compareSync(Current_password, rows[0].password)){
+      if(password == conpassword){ 
+        password = bcrypt.hashSync(password, null, null)
+        var sql = `UPDATE register SET password = '${password}' WHERE username = '${username}'`
+        connection.query(sql,function(err,rows){
+          res.send(
+            '<html>'   
+              +'<script>'
+              +'alert("เปลี่ยนรหัสสำเร็จ");'
+              +'location.replace("/logout")'  
+             +'</script>'
+          +'</html>')
+        }) 
+      }
+      else{
+        req.flash('CheckPassword','รหัสผ่านไหม่ไม่ตรงกัน')
+        res.redirect('/user/changepass') 
+      }
+    }
+    else{
+      req.flash('CheckPassword','รหัสผ่านปัจจุบันไม่ถูกต้อง')
+      res.redirect('/user/changepass') 
+    }
+    
+  }) 
+})
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated())
