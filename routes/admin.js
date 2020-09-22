@@ -31,7 +31,7 @@ function Linenotify (messageG){   //ฟังชั่น linenotify
   }
 
 router.get('/register', isLoggedIn,function(req, res, next) {
-    res.render('register',{message: req.flash('CheakRePassword')});
+    res.render('register',{message: req.flash('CheckRePassword')});
   });
 
 router.post('/insert', function(req, res, next){
@@ -77,25 +77,25 @@ router.post('/insert', function(req, res, next){
                       +'</html>')
                     }
                     else{
-                      req.flash('CheakRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                      req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
                       res.redirect('/admin/register') 
                     }
                 }
                 else{
-                  req.flash('CheakRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
+                  req.flash('CheckRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
                   res.redirect('/admin/register') 
                 }
               })
             }
             else{
-              req.flash('CheakRePassword','ชื่ออังกฤษซ้ำกรุณาเปลี่ยน')
+              req.flash('CheckRePassword','ชื่ออังกฤษซ้ำกรุณาเปลี่ยน')
               res.redirect('/admin/register') 
             }
         })
 
       }
       else{
-        req.flash('CheakRePassword','ชื่อซ้ำกรุณาเปลี่ยน')
+        req.flash('CheckRePassword','ชื่อซ้ำกรุณาเปลี่ยน')
         res.redirect('/admin/register') 
       }
     })
@@ -282,11 +282,11 @@ connection.query(sql,function (err, data) {
     Linenotify(messageG =`ไม่ทำการอนุมัติรายการลา เลขที่ ${req.query.leave_id} กรุณาติดต่อหัวหน้าฝ่าย`)
 })
  
-router.get('/chengepass',function(req,res,next){
-  res.render('chengepass')
+router.get('/changepassAdmin',function(req,res,next){
+  res.render('changepassAdmin')
 })
 
-router.post('/chengepassword',function(req,res,next){
+router.post('/changepasswordAdmin',function(req,res,next){
   var username = req.body.username
   var password = req.body.password
   password = bcrypt.hashSync(password, null, null)

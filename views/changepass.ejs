@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<style>
+* {
+  box-sizing: border-box;}
+ 
+.user-detail {
+    height: auto;
+    border: 2px solid #f1f1f1;
+    padding: 16px;
+    background-color: white;
+    width: auto;}
+input{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;}
+button[type=submit] {
+    background-color: #0099ff;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 20px;}
+label{
+  font-size: 17px;}
+button[type=submit]:hover {
+  background-color:#3d3c3c;}
+
+div.user-detail{
+    margin: auto;
+}
+body{            
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    }
+h2{
+    text-align: center;
+}
+label.head-regis-system{
+    font-size: 20px
+}
+select{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+
+  .alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}
+  .alert h4{margin-top:0;color:inherit}.alert 
+  .alert-link{font-weight:700}.alert>p,.alert>ul{margin-bottom:0}
+  .alert>p+p{margin-top:5px}.alert-danger{
+  color:#a94442;
+  background-color:#f2dede;
+  border-color:#ebccd1
+  }
+  
+</style>
+</head>
+<body>
+<!--====form section start====-->
+<div class="bodycolor">
+<div class="user-detail">
+    <h2>เปลี่ยนรหัสผ่าน</h2>
+    <form action="/user/changepassword" method="POST">
+      <% if(message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div> 
+       <% } %>
+          <input type="password" placeholder="Current password" name="Current_password" required maxlength="100">
+          <input type="password" placeholder="Password" name="password" required maxlength="100">
+          <input type="password" placeholder="Confirm Password" name="Con_password" required maxlength="100">
+
+
+          <button type="submit" onclick="return confirm('จะทำการเปลี่ยนรหัสผ่านหรือไม่')">Submit</button>
+        </form>
+
+        </div>
+      </div>
+<script>
+
+</script>
+<!--====form section start====-->
+</body>
+</html>
