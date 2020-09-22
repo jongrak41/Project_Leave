@@ -102,41 +102,9 @@ div.number{
 
   
 
-<%
-if(userData.length!=0){
-var i=1;
-userData.forEach(function(data){
-%>  
 <script>    
-    function approve() {
-        var txt;
-            var r = confirm("กรุณายืนยันการอุมัติการลา");
-         if (r == true) {
-    window.location.href='/admin/approve?leave_id=<%=data.leave_id%>'  
-  } 
-        else {
-    txt = "You pressed Cancel!";
-  }
-    }
-
-    function non_approve() {
-        var txt;
-            var r = confirm("กรุณายืนยันการอุมัติการลา");
-         if (r == true) {
-    window.location.href='/admin/non_approve?leave_id=<%=data.leave_id%>'
-  } 
-        else {
-    txt = "You pressed Cancel!";
-  }
-    }
 
 </script>
-<%  i++; }) %>
-<% } else{ %>
-    <div class="not-found">
-        <p> Data not found</p>
-    </div>
-<% } %>
-<!--====form section start====-->
+
 </body>
 </html>

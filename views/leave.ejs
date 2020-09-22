@@ -1,107 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<body>
-<title>Leave</title>
-
-
-<div >
-  <form action ="/user/insertleave" method="POST">
-  <h1>กรุณากรอกข้อมูลใบลางาน</h1>
-  <p class="name">นาย <%= user.name %> <%= user.surname %></p>
-  <!-- <input type="text" placeholder="กรุณากรอก นาสกุล" id="lname" value="" name="lastName" required="true"><br><br> -->
-  <input class="date" type="datetime-local" name="leave_date"> <br> <p>ถึงวันที่</p>
-  <input class="date" type="datetime-local" name="to_date"><br><br>
-  <select name ="category" id="category">
-      <option value="ลากิจ">ลากิจ</option>
-      <option value="ลาป่วย">ลาป่วย</option>
-      <option value="ลาพักร้อน">ลาพักร้อน</option>
-      <option value="ลาคลอด">ลาคลอด</option>
-    </select> <br><br>
-      <textarea class="message" name="cause" rows="15" cols="50" placeholder="หมายเหตุ"></textarea><br>
-  <br><br>   
-  <input class="ok" type="submit" onclick="return confirm('จะทำการลงทะเบียนหรือไหม่')"> <br><br>
-  </form>
-  </div>
-<br>
-
-    <script ></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<style>
+* {
+  box-sizing: border-box;}
  
-  </head>
-</body>
+.user-detail {
+    height: auto;
+    border: 2px solid #f1f1f1;
+    padding: 16px;
+    background-color: white;
+    width: auto;}
+input{
+  width: 45.7%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;}
+button[type=submit] {
+    background-color: #0099ff;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 20px;}
+label{
+  font-size: 17px;}
+button[type=submit]:hover {
+  background-color:#3d3c3c;}
 
+div.user-detail{
+    margin: auto;
+}
+body{            
+    background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+    background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+    background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+    background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+    background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+    min-height: 100vh;
+    }
+h2{
+    text-align: center;
+}
+label.head-regis-system{
+    font-size: 20px
+}
+select{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;}
+
+  .alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}
+  .alert h4{margin-top:0;color:inherit}.alert 
+  .alert-link{font-weight:700}.alert>p,.alert>ul{margin-bottom:0}
+  .alert>p+p{margin-top:5px}.alert-danger{
+  color:#a94442;
+  background-color:#f2dede;
+  border-color:#ebccd1
+  }
+  
+  div.nametext{
+            text-align: right;
+        }
+  textarea.message{
+      font-size: 20px;
+      height: 20;
+      width: 100%;
+    }
+  
+</style>
+</head>
+<body>
+<!--====form section start====-->
+<div class="bodycolor">
+<div class="user-detail">
+  <div class="nametext"><p10 class="name"><%= user.name %> <%= user.surname %></p10></div>
+    <h2>กรุณากรอกข้อมูลใบลางาน</h2>
+    <form action="/user/insertleave" method="POST">
+          <label>วันที่ลา</label> <br>
+          <input class="date" type="datetime-local" name="leave_date"> ถึง
+          <input class="date" type="datetime-local" name="to_date">
+          <label>ประเภทการลา</label>
+          <select name ="category" id="category">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="ลากิจ">ลากิจ</option>
+            <option value="ลาป่วย">ลาป่วย</option>
+            <option value="ลาพักร้อน">ลาพักร้อน</option>
+            <option value="ลาคลอด">ลาคลอด</option>
+        </select>
+        <textarea class="message" name="cause" rows="15" cols="50" placeholder="หมายเหตุ"></textarea><br>
+
+          <button type="submit" onclick="return confirm('จะทำการลาหรือไม่')">Submit</button>
+        </form>
+
+        </div>
+      </div>
 <script>
 
 </script>
-
-<style>
-  
-  input.date{
-    width: 90%;
-  }
-  p.name{
-    font-size: 20px;
-    ;
-  }
-    textarea.message{
-      font-size: 20px;
-      height: 20;
-      width: 90%;
-    }
-
-    h1{
-      color: #2c2c2c;
-      font-size: 25px;
-      font-family:'Designil Font';
-    }
- 
-    input.ok{
-                font-size: 20px;
-                width: 90%;
-                padding: 10px;
-                border: 1px solid #919191;
-                margin-bottom: 5px;
-                box-sizing:border-box;
-                text-align: center;
-                background-color: #0099ff;
-                color: #ffffff;
-    }
-    div{
-                text-align: center;
-                width: 98%;
-                height: auto;
-                background-color: #ffffff;
-                border: 1px solid #919191;
-                margin: auto;
-    }
-  body{ 
-                 text-align: center;
-                 background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
-                 background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
-                 background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
-                 background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
-                 background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
-                 min-height: 100vh;
-                 margin:auto;
-  }
-  select{
-                width: 90%;
-                padding: 10px;
-                border: 1px solid #919191;
-                margin-bottom: 5px;
-                box-sizing:border-box;
-                text-align: center;
-  }
-  input{
-                width: 25%;
-                padding: 10px;
-                border: 1px solid #919191;
-                margin-bottom: 5px;
-                box-sizing:border-box;
-                text-align: center;
-              }
-
-</style>
-
+<!--====form section start====-->
+</body>
 </html>
