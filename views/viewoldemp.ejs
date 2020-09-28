@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Register</title>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <style>
@@ -14,8 +13,7 @@
     border: 2px solid #f1f1f1;
     padding: 16px;
     background-color: white;
-    width: auto;
-    }
+    width: auto;}
 input{
   width: 100%;
   padding: 15px;
@@ -234,14 +232,13 @@ select{
 {
   transform: none;
 }
-
 </style>
 </head>
 <body>
 <!--====form section start====-->
 <div class="bodycolor">
 <div class="user-detail">
-                                                  <!--    Made by Erik Terwan    -->
+  <!--    Made by Erik Terwan    -->
 <!--   24th of November 2015   -->
 <!--        MIT License        -->
 <nav role="navigation">
@@ -278,33 +275,39 @@ select{
   </div>
 </nav>
     <h2>เพิ่มข้อมูลพนักงานใหม่</h2>
-    <form action="/admin/insert" method="POST">
+    <form action="/admin/Re-emp" method="POST">
       <% if(message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div> 
        <% } %>
+      <%
+      if(userData.length!=0){
+      var i=1;
+      userData.forEach(function(data){
+      %>
+           <input type="hidden" id="Regis_ID" name="Regis_ID" value="<%=data.Regis_ID%>">
           <label>ชื่อ-นามสกุล</label>
-          <input type="text" placeholder="ชื่อ" name="fname" required maxlength="30">
-          <input type="text" placeholder="นามสกุล" name="lname" required maxlength="30">
+          <input type="text" placeholder="ชื่อ" name="fname" required maxlength="30" value="<%=data.name%>">
+          <input type="text" placeholder="นามสกุล" name="lname" required maxlength="30" value="<%=data.surname%>">
           <label>ชื่อ-นามสกุล ภาษาอังกฤษ</label>
-          <input type="text" placeholder="ชื่อ ภาษาอังกฤษ" name="fname_en" required maxlength="30">
-          <input type="text" placeholder="นามสกุล ภาษาอังกฤษ" name="lname_en" required maxlength="30">
+          <input type="text" placeholder="ชื่อ ภาษาอังกฤษ" name="fname_en" required maxlength="30" value="<%=data.name_eng%>">
+          <input type="text" placeholder="นามสกุล ภาษาอังกฤษ" name="lname_en" required maxlength="30" value="<%=data.surname_eng%>">
           <label>รหัสพนักงาน</label>
-          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6">
+          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6" value="<%=data.personnel_id%>">
           <label>อีเมล</label>
-          <input type="text" placeholder="อีเมล" name="email" required maxlength="50">
+          <input type="text" placeholder="อีเมล" name="email" required maxlength="50" value="<%=data.email%>">
           <label>ไอดีไลน์</label>
-          <input type="text" placeholder="ไอดีไลน์" name="line_id" required maxlength="20">
+          <input type="text" placeholder="ไอดีไลน์" name="line_id" required maxlength="20" value="<%=data.line_id%>">
           <label>เบอร์โทรศัพท์</label>
-          <input type="text" placeholder="เบอร์โทรศัพท์" name="tel"  maxlength="10">
+          <input type="text" placeholder="เบอร์โทรศัพท์" name="tel"  maxlength="10" value="<%=data.tel_number%>">
           <label>ตำแหน่ง</label>
           <select name="position" id="position" required>
-            <option disabled selected value> -- select an option -- </option>
+            <option value="<%=data.position%>" selected value><%=data.position%></option>
             <option value="Manager">Manager</option>
             <option value="Personal">Personal</option>
         </select>
           <label>แผนก</label>
           <select name="department" id="department" required>
-            <option disabled selected value> -- select an option -- </option>
+            <option value="<%=data.department%>" selected value><%=data.department%></option>
             <option value="IT">IT</option>
             <option value="Marketing">Marketing</option>
             <option value="Admin">Admin</option>
@@ -316,22 +319,26 @@ select{
            </br>
            <br>
           <label>ชื่อผู้ใช้งาน</label>
-          <input type="text" placeholder="ชื่อผู้ใช้งาน" name="username" required maxlength="30">
+          <input type="text" placeholder="ชื่อผู้ใช้งาน" name="username" required maxlength="30" value="<%=data.username%>">
           <label>รหัสผ่าน</label>   
           <input type="password" placeholder="รหัสผ่าน" name="password" required maxlength="100">
           <label>ยืนยันรหัสผ่าน</label>   
           <input type="password" placeholder="ยืนยันรหัสผ่าน" name="Re_password" required maxlength="100">
           <label>สิทธิ์</label>
           <select name="permission" id="permission" required>
-              <option disabled selected value> -- select an option -- </option>
+              <option value="<%=data.permission%>" selected value><%=data.permission%></option>
               <option value="General">General</option>
               <option value="Admin">Admin</option>
           </select>
-          <div class="center-button">
-          <a class="logout" href="/admin/list-oldemp">พนักงานเก่า</a> <br> <br>
-        </div>
+
           <button type="submit" onclick="return confirm('จะทำการลงทะเบียนหรือไหม่')">Submit</button>
 
+          <%  i++; }) %>
+          <% } else{ %>
+              <div class="not-found">
+                  <p> Data not found</p>
+              </div>
+          <% } %>
         </form>
 
         </div>

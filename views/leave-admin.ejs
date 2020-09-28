@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Register</title>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <style>
@@ -14,10 +13,9 @@
     border: 2px solid #f1f1f1;
     padding: 16px;
     background-color: white;
-    width: auto;
-    }
+    width: auto;}
 input{
-  width: 100%;
+  width: 45.7%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
@@ -40,18 +38,6 @@ label{
   font-size: 17px;}
 button[type=submit]:hover {
   background-color:#3d3c3c;}
-button.Re_emp{
-    text-align: center;
-    background-color: #0099ff;
-    color: #ffffff;
-    padding: 10px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 30%;
-    opacity: 0.9;
-    font-size: 10px;
-}
 
 div.user-detail{
     margin: auto;
@@ -87,11 +73,16 @@ select{
   border-color:#ebccd1
   }
   
-  div.center-button{
-    text-align: left;
-  }
-
-  #menuToggle
+  div.nametext{
+            text-align: right;
+        }
+  textarea.message{
+      font-size: 20px;
+      height: 20;
+      width: 100%;
+    }
+  
+    #menuToggle
 {
   display: block;
   position: fixed;
@@ -102,7 +93,6 @@ select{
   
   -webkit-user-select: none;
   user-select: none;
-  text-align: left;
 }
 
 #menuToggle a
@@ -234,14 +224,13 @@ select{
 {
   transform: none;
 }
-
 </style>
 </head>
 <body>
 <!--====form section start====-->
 <div class="bodycolor">
 <div class="user-detail">
-                                                  <!--    Made by Erik Terwan    -->
+                        <!--    Made by Erik Terwan    -->
 <!--   24th of November 2015   -->
 <!--        MIT License        -->
 <nav role="navigation">
@@ -277,61 +266,23 @@ select{
     </ul>
   </div>
 </nav>
-    <h2>เพิ่มข้อมูลพนักงานใหม่</h2>
-    <form action="/admin/insert" method="POST">
-      <% if(message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div> 
-       <% } %>
-          <label>ชื่อ-นามสกุล</label>
-          <input type="text" placeholder="ชื่อ" name="fname" required maxlength="30">
-          <input type="text" placeholder="นามสกุล" name="lname" required maxlength="30">
-          <label>ชื่อ-นามสกุล ภาษาอังกฤษ</label>
-          <input type="text" placeholder="ชื่อ ภาษาอังกฤษ" name="fname_en" required maxlength="30">
-          <input type="text" placeholder="นามสกุล ภาษาอังกฤษ" name="lname_en" required maxlength="30">
-          <label>รหัสพนักงาน</label>
-          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6">
-          <label>อีเมล</label>
-          <input type="text" placeholder="อีเมล" name="email" required maxlength="50">
-          <label>ไอดีไลน์</label>
-          <input type="text" placeholder="ไอดีไลน์" name="line_id" required maxlength="20">
-          <label>เบอร์โทรศัพท์</label>
-          <input type="text" placeholder="เบอร์โทรศัพท์" name="tel"  maxlength="10">
-          <label>ตำแหน่ง</label>
-          <select name="position" id="position" required>
+  <div class="nametext"><p10 class="name"><%= user.name %> <%= user.surname %></p10></div>
+    <h2>กรุณากรอกข้อมูลใบลางาน</h2>
+    <form action="/user/insertleave" method="POST">
+          <label>วันที่ลา</label> <br>
+          <input class="date" type="datetime-local" name="leave_date"> ถึง
+          <input class="date" type="datetime-local" name="to_date">
+          <label>ประเภทการลา</label>
+          <select name ="category" id="category">
             <option disabled selected value> -- select an option -- </option>
-            <option value="Manager">Manager</option>
-            <option value="Personal">Personal</option>
+            <option value="ลากิจ">ลากิจ</option>
+            <option value="ลาป่วย">ลาป่วย</option>
+            <option value="ลาพักร้อน">ลาพักร้อน</option>
+            <option value="ลาคลอด">ลาคลอด</option>
         </select>
-          <label>แผนก</label>
-          <select name="department" id="department" required>
-            <option disabled selected value> -- select an option -- </option>
-            <option value="IT">IT</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Admin">Admin</option>
-            <option value="Deverloper">Deverloper</option>
-        </select>
-           <br>
-           <br>
-          <label class="head-regis-system">*ลงทะเบียนเพื่อเข้าใช้งานระบบ</label>
-           </br>
-           <br>
-          <label>ชื่อผู้ใช้งาน</label>
-          <input type="text" placeholder="ชื่อผู้ใช้งาน" name="username" required maxlength="30">
-          <label>รหัสผ่าน</label>   
-          <input type="password" placeholder="รหัสผ่าน" name="password" required maxlength="100">
-          <label>ยืนยันรหัสผ่าน</label>   
-          <input type="password" placeholder="ยืนยันรหัสผ่าน" name="Re_password" required maxlength="100">
-          <label>สิทธิ์</label>
-          <select name="permission" id="permission" required>
-              <option disabled selected value> -- select an option -- </option>
-              <option value="General">General</option>
-              <option value="Admin">Admin</option>
-          </select>
-          <div class="center-button">
-          <a class="logout" href="/admin/list-oldemp">พนักงานเก่า</a> <br> <br>
-        </div>
-          <button type="submit" onclick="return confirm('จะทำการลงทะเบียนหรือไหม่')">Submit</button>
+        <textarea class="message" name="cause" rows="15" cols="50" placeholder="หมายเหตุ"></textarea><br>
 
+          <button type="submit" onclick="return confirm('จะทำการลาหรือไม่')">Submit</button>
         </form>
 
         </div>

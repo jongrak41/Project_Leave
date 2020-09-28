@@ -36,6 +36,6 @@ app.use('/user', usersRouter);
 
 var adminsRouter = require('./routes/admin');
 app.use('/admin', adminsRouter);
-
+   
 app.listen(port);
 console.log("Server start Port: " + port);

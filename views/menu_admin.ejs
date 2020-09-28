@@ -1,6 +1,6 @@
 <html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Munu Admin</title>
+    <title>Menu Admin</title>
     <body>
     
     <div class="nametext"><p10 class="name"><%= user.name %> <%= user.surname %></p10></div>
@@ -16,7 +16,9 @@
         <input type="button" value="อนุมัติการลา" onclick="window.location.href='/admin/list-leave' "> <br><br>
         <input type="button" value="ดูข้อมูลพนักงาน" onclick="window.location.href='/admin/btn-user-list'"><br><br>
         <input type="button" value="เพิ่มข้อมูลพนักงานใหม่" onclick="window.location.href='/admin/register'"> <br><br>
-        
+        <div class="logout"> 
+        <a class="logout" href="/logout">Logout</a>
+    </div>
         <form >
 
         </form>
@@ -24,6 +26,9 @@
     </body>
 
     <style>
+        div.logout{
+            text-align: right;
+        }
         h1{
             font-size: 50px;
         }

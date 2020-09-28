@@ -1,6 +1,6 @@
 <html>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Munu Admin</title>
+    <title>Menu Admin</title>
     <body>
         <div class="nametext"><p10 class="name"><%= user.name %> <%= user.surname %></p10></div>
 
@@ -11,6 +11,9 @@
         <input type="button" value="ดูประวัติการลา" onclick="window.location.href='/user/list-history'"><br><br>
         <input type="button" value="เปลี่ยนรหัสผ่าน" onclick="window.location.href='/user/changepass'"> <br><br>
         <p></p>
+        <div class="logout"> 
+            <a class="logout" href="/logout">Logout</a>
+        </div>
         <form >
 
         </form>
@@ -18,6 +21,9 @@
     </body>
 
     <style>
+        div.logout{
+            text-align: right;
+        }
         h1{
             font-size: 50px;
         }

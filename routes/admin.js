@@ -4,7 +4,6 @@ var requestG = require('request');
 var bcrypt = require('bcrypt-nodejs');
 var mysql = require('mysql');
 var dbconfig = require('../config/database');
-const e = require('express');
 var connection = mysql.createConnection(dbconfig.connection);
 
 connection.query('USE ' + dbconfig.database);
@@ -25,7 +24,6 @@ function Linenotify (messageG){   //ฟังชั่น linenotify
           form: {
             message: messageG
           }
-  
       }
   ) 
   }
@@ -72,7 +70,7 @@ router.post('/insert', function(req, res, next){
                         '<html>'   
                           +'<script>'
                           +'alert("บันทึกสำเร็จ");'
-                          +'location.replace("/admin/register")'  
+                          +'location.replace("/menu")'  
                         +'</script>'
                       +'</html>')
                     }
@@ -135,7 +133,7 @@ router.get('/disable',function(req, res, next){
 })
 
 router.get('/list-leave', isLoggedIn,function(req, res, next) {
-  var sql='SELECT * FROM `record_view` where leave_status = "รออนุมัติ"';
+  var sql='SELECT * FROM `record_view` where leave_status = "รออนุมัติ" and reg_status = "enable"';
   connection.query(sql, function (err, data, fields) {
   if (err) throw err;
   res.render('list-leave', {userData: data});
@@ -304,6 +302,63 @@ router.post('/changepasswordAdmin',function(req,res,next){
       console.log('Chenge Success')
     }
   })
+})
+
+router.get('/list-oldemp',isLoggedIn,function(req,res,next){
+  var sql =`select * from register where reg_status = 'disable'`
+  connection.query(sql,function(err ,data ,fields){
+    if(err) throw err
+    res.render('list-oldemp',{userData : data})
+  })
+})
+
+router.get('/viewoldemp',isLoggedIn,function(req, res, next){
+  var sql='SELECT * FROM register where reg_status = "disable" and Regis_ID = ?';
+  connection.query(sql,req.query.Regis_ID, function (err, data) {
+  res.render('viewoldemp',{userData: data ,message: req.flash('CheckRePassword')});
+})
+})
+
+router.post('/Re-emp',function(req,res,next){
+  var Regis_ID = req.body.Regis_ID
+  var fname = req.body.fname;
+  var lname = req.body.lname;
+  var fname_en = req.body.fname_en;
+  var lanem_en = req.body.lname_en;
+  var personnel_id = req.body.personnel_id;
+  var email = req.body.email;
+  var line_id = req.body.line_id;
+  var tel = req.body.tel;
+  var position = req.body.position;
+  var department = req.body.department;
+  var username = req.body.username;
+  var password = req.body.password;
+  var Re_password = req.body.Re_password;
+  var permission = req.body.permission;
+
+
+  if(password == Re_password){
+    password = bcrypt.hashSync(password, null, null)
+    var sql = `UPDATE register SET personnel_id='${personnel_id}',name='${fname}',surname='${lname}',name_eng='${fname_en}',
+    surname_eng='${lanem_en}',position='${position}',department='${department}',email='${email}',line_id='${line_id}',tel_number='${tel}',username='${username}',
+    password='${password}',permission='${permission}',date_register=NOW(),reg_status='enable' WHERE Regis_ID ='${Regis_ID}'`
+    connection.query(sql,function(err){
+      if(err) throw err
+      Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
+      res.send(
+        '<html>'   
+          +'<script>'
+          +'alert("บันทึกสำเร็จ");'
+          +'location.replace("/menu")'  
+        +'</script>'
+      +'</html>')
+    })
+  }
+  else{
+    req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+    res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
+  }
+
 })
 
 

@@ -31,16 +31,22 @@ function Linenotify (messageG){   //ฟังชั่น linenotify
         form: {
           message: messageG
         }
-
     }
 ) 
 }
 
 
 router.get('/leave',isLoggedIn, function(req,res){
-  res.render('leave',{
-  user:req.user
- })
+  if(req.user.permission == 'Admin'){
+    res.render('leave-admin',{
+      user:req.user
+     })
+  }
+  else{
+    res.render('leave',{
+      user:req.user
+     })
+  }
 })
 
 router.post('/insertleave', function(req,res){
@@ -64,7 +70,7 @@ router.post('/insertleave', function(req,res){
     '<html>'   
       +'<script>'
       +'alert("บันทึกสำเร็จ");'
-      +'location.replace("/munu")'  
+      +'location.replace("/menu")'  
      +'</script>'
   +'</html>')
 
@@ -73,7 +79,12 @@ router.post('/insertleave', function(req,res){
 router.get('/list-history', isLoggedIn,function(req, res, next) {
   var sql='SELECT * FROM `record_view` where Regis_ID = ?';
   connection.query(sql,req.user.Regis_ID,function (err, data, fields) {
-  res.render('list-history', {userData: data});
+  if(req.user.permission == 'Admin'){
+    res.render('list-history-admin', {userData: data});
+  }
+  else{
+    res.render('list-history', {userData: data});
+  }
 });
 });
 
@@ -159,9 +170,16 @@ router.get('/viewhistory',isLoggedIn,function(req, res, next){
  })
     var sql='SELECT * FROM `record_view` where Regis_ID = ? and leave_id = ?';
     connection.query(sql,[req.user.Regis_ID, req.query.leave_id], function (err, data, fields) {
-      res.render('viewhistory',{userData: data, name: name, on_leave: on_leave, sick_leave: sick_leave, Absent: Absent, Maternity_leave: Maternity_leave, surname: surname 
-      , personnel_id: personnel_id, department: department, position: position, email: email, tel_number: tel_number, line_id: line_id, cause: cause, category: category
-      , leave_date: leave_date, to_date: to_date , leave_idto: leave_idto ,Vacation: Vacation});
+      if(req.user.permission == 'Admin'){
+        res.render('viewhistory-admin',{userData: data, name: name, on_leave: on_leave, sick_leave: sick_leave, Absent: Absent, Maternity_leave: Maternity_leave, surname: surname 
+          , personnel_id: personnel_id, department: department, position: position, email: email, tel_number: tel_number, line_id: line_id, cause: cause, category: category
+          , leave_date: leave_date, to_date: to_date , leave_idto: leave_idto ,Vacation: Vacation});
+      }
+      else{
+        res.render('viewhistory',{userData: data, name: name, on_leave: on_leave, sick_leave: sick_leave, Absent: Absent, Maternity_leave: Maternity_leave, surname: surname 
+          , personnel_id: personnel_id, department: department, position: position, email: email, tel_number: tel_number, line_id: line_id, cause: cause, category: category
+          , leave_date: leave_date, to_date: to_date , leave_idto: leave_idto ,Vacation: Vacation});
+      }
     })
   })
 

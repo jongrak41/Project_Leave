@@ -9,7 +9,7 @@ module.exports = function(app, passport) {
  });
 
  app.post('/login', passport.authenticate('local-login', {
-  successRedirect: '/munu',
+  successRedirect: '/menu',
   failureRedirect: '/login',
   failureFlash: true
  }),
@@ -32,19 +32,19 @@ module.exports = function(app, passport) {
 //   failureFlash: true n
 //  }));
 
- app.get('/munu', isLoggedIn, function(req, res){
-  if(req.user.permission == 'admin'){
-        res.render('munu_admin',{
+ app.get('/menu', isLoggedIn, function(req, res){
+  if(req.user.permission == 'Admin'){
+        res.render('menu_admin',{
            user:req.user
         })
      }
   else{
-        res.render('munu_user', {
+        res.render('menu_user', {
            user:req.user
        })
       }
  });
-
+       
  app.get('/logout', function(req,res){
   req.logout();
   res.redirect('/');
