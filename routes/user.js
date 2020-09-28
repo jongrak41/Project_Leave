@@ -77,7 +77,7 @@ router.post('/insertleave', function(req,res){
 })
 
 router.get('/list-history', isLoggedIn,function(req, res, next) {
-  var sql='SELECT * FROM `record_view` where Regis_ID = ?';
+  var sql='SELECT * FROM `record_view` where Regis_ID = ? ORDER BY leave_id DESC';
   connection.query(sql,req.user.Regis_ID,function (err, data, fields) {
   if(req.user.permission == 'Admin'){
     res.render('list-history-admin', {userData: data});

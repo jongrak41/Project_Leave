@@ -48,13 +48,13 @@ router.post('/insert', function(req, res, next){
     var Re_password = req.body.Re_password;
     var permission = req.body.permission;
  
-    var sql=`SELECT * FROM register where name = ? and surname = ?`;
+    var sql=`SELECT * FROM register where reg_status = 'enable' and  name = ? and surname = ?`;
     connection.query(sql,[fname,lname], function (err, results) {
       if(results.length == 0){
-        var sql=`SELECT * FROM register where name_eng = ? and surname_eng = ?`;
+        var sql=`SELECT * FROM register where reg_status = 'enable' and name_eng = ? and surname_eng = ?`;
         connection.query(sql,[fname_en,lanem_en], function (err, results) {
             if(results.length == 0){
-              var sql=`SELECT * FROM register where username = ?`;
+              var sql=`SELECT * FROM register where reg_status = 'enable' and  username = ?`;
               connection.query(sql,[username], function (err, results) {
                 if(results.length == 0){
                     if(password == Re_password){
@@ -319,7 +319,7 @@ router.get('/viewoldemp',isLoggedIn,function(req, res, next){
 })
 })
 
-router.post('/Re-emp',function(req,res,next){
+router.post('/Insert-Re-emp',function(req,res,next){
   var Regis_ID = req.body.Regis_ID
   var fname = req.body.fname;
   var lname = req.body.lname;
@@ -336,29 +336,56 @@ router.post('/Re-emp',function(req,res,next){
   var Re_password = req.body.Re_password;
   var permission = req.body.permission;
 
+  var sql=`SELECT * FROM register where reg_status = 'enable' and  name = ? and surname = ?`;
+  connection.query(sql,[fname,lname], function (err, results) {
+    if(results.length == 0){
+      var sql=`SELECT * FROM register where reg_status = 'enable' and name_eng = ? and surname_eng = ?`;
+      connection.query(sql,[fname_en,lanem_en], function (err, results) {
+          if(results.length == 0){
+            var sql=`SELECT * FROM register where reg_status = 'enable' and  username = ?`;
+            connection.query(sql,[username], function (err, results) {
+              if(results.length == 0){
+                  if(password == Re_password){
+                    password = bcrypt.hashSync(password, null, null)
+                    var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, reg_status)`
+                    +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), 'enable')`;
+                    connection.query(sql,function (err, data) {
+                      if (err) throw err;
+                            console.log("record inserted");
+                        });
+                    Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
+                    res.send(
+                      '<html>'   
+                        +'<script>'
+                        +'alert("บันทึกสำเร็จ");'
+                        +'location.replace("/menu")'  
+                      +'</script>'
+                    +'</html>')
+                  }
+                  else{
+                    req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                    res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
+                  }
+              }
+              else{
+                req.flash('CheckRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
+                res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
+              }
+            })
+          }
+          else{
+            req.flash('CheckRePassword','ชื่ออังกฤษซ้ำกรุณาเปลี่ยน')
+            res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`)  
+          }
+      })
 
-  if(password == Re_password){
-    password = bcrypt.hashSync(password, null, null)
-    var sql = `UPDATE register SET personnel_id='${personnel_id}',name='${fname}',surname='${lname}',name_eng='${fname_en}',
-    surname_eng='${lanem_en}',position='${position}',department='${department}',email='${email}',line_id='${line_id}',tel_number='${tel}',username='${username}',
-    password='${password}',permission='${permission}',date_register=NOW(),reg_status='enable' WHERE Regis_ID ='${Regis_ID}'`
-    connection.query(sql,function(err){
-      if(err) throw err
-      Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
-      res.send(
-        '<html>'   
-          +'<script>'
-          +'alert("บันทึกสำเร็จ");'
-          +'location.replace("/menu")'  
-        +'</script>'
-      +'</html>')
-    })
-  }
-  else{
-    req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
-    res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
-  }
-
+    }
+    else{
+      req.flash('CheckRePassword','ชื่อซ้ำกรุณาเปลี่ยน')
+      res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
+    }
+  })
+  
 })
 
 

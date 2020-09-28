@@ -106,14 +106,14 @@ select{
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
+  color: #413e3e;
   
   transition: color 0.3s ease;
 }
 
 #menuToggle a:hover
 {
-  color: tomato;
+  color: #ffffff;
 }
 
 
@@ -206,9 +206,13 @@ select{
   height: auto;
   margin: -100px 0 0 -20px;
   padding: 30px;
-  padding-top: 125px;
-  
-  background: #ededed;
+  padding-top: 140px;
+  background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+  background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+  background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+  background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+  background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+  min-height: 200vh;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
@@ -221,7 +225,7 @@ select{
 
 #menu li
 {
-  padding: 10px 0;
+  padding: 14px 0;
   font-size: 22px;
 }
 
@@ -275,7 +279,7 @@ select{
   </div>
 </nav>
     <h2>เพิ่มข้อมูลพนักงานใหม่</h2>
-    <form action="/admin/Re-emp" method="POST">
+    <form action="/admin/Insert-Re-emp" method="POST">
       <% if(message.length > 0) { %>
         <div class="alert alert-danger"><%= message %></div> 
        <% } %>
@@ -292,7 +296,7 @@ select{
           <input type="text" placeholder="ชื่อ ภาษาอังกฤษ" name="fname_en" required maxlength="30" value="<%=data.name_eng%>">
           <input type="text" placeholder="นามสกุล ภาษาอังกฤษ" name="lname_en" required maxlength="30" value="<%=data.surname_eng%>">
           <label>รหัสพนักงาน</label>
-          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6" value="<%=data.personnel_id%>">
+          <input type="text" placeholder="รหัสพนักงาน" name="personnel_id" required maxlength="6">
           <label>อีเมล</label>
           <input type="text" placeholder="อีเมล" name="email" required maxlength="50" value="<%=data.email%>">
           <label>ไอดีไลน์</label>
@@ -301,13 +305,13 @@ select{
           <input type="text" placeholder="เบอร์โทรศัพท์" name="tel"  maxlength="10" value="<%=data.tel_number%>">
           <label>ตำแหน่ง</label>
           <select name="position" id="position" required>
-            <option value="<%=data.position%>" selected value><%=data.position%></option>
+            <option disabled selected value> -- select an option -- </option>
             <option value="Manager">Manager</option>
             <option value="Personal">Personal</option>
         </select>
           <label>แผนก</label>
           <select name="department" id="department" required>
-            <option value="<%=data.department%>" selected value><%=data.department%></option>
+            <option disabled selected value> -- select an option -- </option>
             <option value="IT">IT</option>
             <option value="Marketing">Marketing</option>
             <option value="Admin">Admin</option>
@@ -326,7 +330,7 @@ select{
           <input type="password" placeholder="ยืนยันรหัสผ่าน" name="Re_password" required maxlength="100">
           <label>สิทธิ์</label>
           <select name="permission" id="permission" required>
-              <option value="<%=data.permission%>" selected value><%=data.permission%></option>
+              <option disabled selected value> -- select an option -- </option>
               <option value="General">General</option>
               <option value="Admin">Admin</option>
           </select>

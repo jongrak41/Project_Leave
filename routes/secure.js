@@ -1,7 +1,12 @@
 
 module.exports = function(app, passport) {
  app.get('/', function(req, res){
-  res.render('index.ejs');
+    if(!req.isAuthenticated()){
+      res.render('index.ejs');
+    }
+    else{
+       res.redirect('/menu')
+    }
  });
 
  app.get('/login', function(req, res){
@@ -54,6 +59,5 @@ module.exports = function(app, passport) {
 function isLoggedIn(req, res, next){
  if(req.isAuthenticated())
   return next();
-
  res.redirect('/');
 }

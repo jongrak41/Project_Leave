@@ -40,28 +40,29 @@ h2{
     text-align: center;
 }
 
-button.b1{
+.button{
             font-size:15px;
             width: 45%;
             padding: 15px;
-            background-color: #ff1616;
             border: 0;
             box-sizing: border-box;
             cursor: pointer;
             font-weight: bold;
             color: #ffffff;
+            transition: 0.4s;
         }
-button.b2{
-            font-size:15px;
-            width: 45%;
-            padding: 15px;
-            background-color: #55ff06;
-            border: 0;
-            box-sizing: border-box;
-            cursor: pointer;
-            font-weight: bold;
-            color: #ffffff;
-        }
+.b1{
+    background-color: #bd0808;
+    padding: 16px;
+}
+.b2{
+    background-color: #00b126;
+}
+
+.button :hover{
+    background-color: #632f17;
+}
+
 div.Ltext{
     text-align:left;
     
@@ -87,14 +88,14 @@ p{
 #menuToggle a
 {
   text-decoration: none;
-  color: #232323;
+  color: #413e3e;
   
   transition: color 0.3s ease;
 }
 
 #menuToggle a:hover
 {
-  color: tomato;
+  color: #ffffff;
 }
 
 
@@ -187,9 +188,13 @@ p{
   height: auto;
   margin: -100px 0 0 -20px;
   padding: 30px;
-  padding-top: 125px;
-  
-  background: #ededed;
+  padding-top: 140px;
+  background: -webkit-gradient(linear, left bottom, right top, from(#08aeea), to(#21f0ff));
+  background: -webkit-linear-gradient(bottom left, #08aeea 0%, #46ff21 100%);
+  background: -moz-linear-gradient(bottom left, #08aeea 0%, #2194ff 100%);
+  background: -o-linear-gradient(bottom left, #08aeea 0%, #21aeff 100%);
+  background: linear-gradient(to top right, #08aeea 0%, #61ffb0 100%);
+  min-height: 200vh;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
@@ -202,7 +207,7 @@ p{
 
 #menu li
 {
-  padding: 10px 0;
+  padding: 14px 0;
   font-size: 22px;
 }
 
@@ -279,8 +284,8 @@ p{
             </form>
             </div>  
         <br>
-        <button class="b1" onclick="deleted()">Disable</button> &puncsp; &puncsp;
-        <button class="b2" onclick="window.location.href='/menu'">กลับสู้หน้าหลัก</button>
+        <button class="button b1" onclick="deleted()">Disable</button> &puncsp; &puncsp;
+        <button class="button b2" onclick="window.location.href='/menu'">กลับสู่หน้าหลัก</button>
     </div>
 
 <%
