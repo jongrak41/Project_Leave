@@ -59,8 +59,8 @@ router.post('/insert', function(req, res, next){
                 if(results.length == 0){
                     if(password == Re_password){
                       password = bcrypt.hashSync(password, null, null)
-                      var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, reg_status)`
-                      +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), 'enable')`;
+                      var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
+                      +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
                       connection.query(sql,function (err, data) {
                         if (err) throw err;
                               console.log("record inserted");
@@ -116,8 +116,8 @@ router.get('/viewemp',isLoggedIn,function(req, res, next){
 })
 })
 
-router.get('/disable',function(req, res, next){
-  var sql='UPDATE `register` SET `reg_status` = "disable" WHERE `register`.`Regis_ID` = ?'; 
+router.get('/disable',isLoggedIn,function(req, res, next){
+  var sql='UPDATE `register` SET `reg_status` = "disable", date_disable = NOW() WHERE `register`.`Regis_ID` = ?'; 
   connection.query(sql,req.query.Regis_ID, function (err, data, fields) {
   if (err) throw err;
   res.redirect('/admin/btn-user-list');
@@ -232,7 +232,7 @@ router.get('/viewleave',isLoggedIn,function(req, res, next){
 })
 })
 
-router.get('/approve',function(req, res, next){
+router.get('/approve',isLoggedIn,function(req, res, next){
   var sql='UPDATE `record_leave` SET `leave_status` = "ผ่านการอนุมัติ" WHERE `record_leave`.`leave_id` = ?;'; 
   connection.query(sql,req.query.leave_id, function (err, data, fields) {
   if (err) throw err;
@@ -256,31 +256,30 @@ router.get('/approve',function(req, res, next){
       Linenotify(messageG =`รายการลา เลขที่ ${req.query.leave_id} ได้ทำการอนุมัติเรียบร้อย`)
 })
 
-router.get('/non_approve',function(req, res, next){
+router.get('/non_approve',isLoggedIn,function(req, res, next){
   var sql='UPDATE `record_leave` SET `leave_status` = "ไม่อนุมัติ" WHERE `record_leave`.`leave_id` = ?;'; 
   connection.query(sql,req.query.leave_id, function (err, data, fields) {
   if (err) throw err;
 })
+  var leave_id = req.query.leave_id
+  var Regis_ID = req.user.Regis_ID
+  var sql = `INSERT INTO record_approve (Approve_id, Submis_date, Regis_ID, leave_id) VALUES (NULL, NOW(), ${Regis_ID}, ${leave_id})`;
+  connection.query(sql,function (err, data) {
+    if (err) throw err;
+          console.log("record inserted");
+      });
 
-var leave_id = req.query.leave_id
-var Regis_ID = req.user.Regis_ID
-var sql = `INSERT INTO record_approve (Approve_id, Submis_date, Regis_ID, leave_id) VALUES (NULL, NOW(), ${Regis_ID}, ${leave_id})`;
-connection.query(sql,function (err, data) {
-   if (err) throw err;
-        console.log("record inserted");
-    });
-
-      res.send(
-      '<html>'   
-        +'<script>'
-        +'alert("ไม่ทำการอนุมัติสำเร็จ");'
-        +'location.replace("/admin/list-leave")'  
-       +'</script>'
-    +'</html>')
-    Linenotify(messageG =`ไม่ทำการอนุมัติรายการลา เลขที่ ${req.query.leave_id} กรุณาติดต่อหัวหน้าฝ่าย`)
+        res.send(
+        '<html>'   
+          +'<script>'
+          +'alert("ไม่ทำการอนุมัติสำเร็จ");'
+          +'location.replace("/admin/list-leave")'  
+        +'</script>'
+      +'</html>')
+      Linenotify(messageG =`ไม่ทำการอนุมัติรายการลา เลขที่ ${req.query.leave_id} กรุณาติดต่อหัวหน้าฝ่าย`)
 })
  
-router.get('/changepassAdmin',function(req,res,next){
+router.get('/changepassAdmin',isLoggedIn,function(req,res,next){
   res.render('changepassAdmin')
 })
 
@@ -347,8 +346,8 @@ router.post('/Insert-Re-emp',function(req,res,next){
               if(results.length == 0){
                   if(password == Re_password){
                     password = bcrypt.hashSync(password, null, null)
-                    var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, reg_status)`
-                    +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), 'enable')`;
+                    var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
+                    +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
                     connection.query(sql,function (err, data) {
                       if (err) throw err;
                             console.log("record inserted");

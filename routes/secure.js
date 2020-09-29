@@ -1,15 +1,10 @@
 
 module.exports = function(app, passport) {
- app.get('/', function(req, res){
-    if(!req.isAuthenticated()){
-      res.render('index.ejs');
-    }
-    else{
-       res.redirect('/menu')
-    }
+ app.get('/', isRemainAuthentication,function(req, res){
+  res.render('index.ejs');
  });
 
- app.get('/login', function(req, res){
+ app.get('/login', isRemainAuthentication,function(req, res){
   res.render('login.ejs', {message:req.flash('loginMessage')});
  });
 
@@ -55,6 +50,12 @@ module.exports = function(app, passport) {
   res.redirect('/');
  })
 };
+
+function isRemainAuthentication(req, res, next){
+   if(req.isAuthenticated())
+   return res.redirect('/menu')
+  next();
+}
 
 function isLoggedIn(req, res, next){
  if(req.isAuthenticated())
