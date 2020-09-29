@@ -187,7 +187,12 @@ router.get('/viewhistory',isLoggedIn,function(req, res, next){
 })
 
 router.get('/changepass',isLoggedIn,function(req,res,next){
-  res.render('changepass',{user:req.user, message: req.flash('CheckPassword')})
+  if(req.user.permission == 'Admin'){
+    res.render('changepass-admin',{user:req.user, message: req.flash('CheckPassword')})
+  }
+  else{
+    res.render('changepass',{user:req.user, message: req.flash('CheckPassword')})
+  }
 })
 
 router.post('/changepassword',function(req,res,next){

@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <style>
 * {
   box-sizing: border-box;}
- body{
-    text-align :center;
- }
+ 
 .user-detail {
     height: auto;
     border: 2px solid #f1f1f1;
@@ -21,8 +21,22 @@ input{
   display: inline-block;
   border: none;
   background: #f1f1f1;}
-
-button:hover {
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;}
+button[type=submit] {
+    background-color: #0099ff;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 20px;}
+label{
+  font-size: 17px;}
+button[type=submit]:hover {
   background-color:#3d3c3c;}
 
 div.user-detail{
@@ -39,40 +53,27 @@ body{
 h2{
     text-align: center;
 }
-
-.button{
-  border: none;
-  color: white;
+label.head-regis-system{
+    font-size: 20px
+}
+select{
+  width: 100%;
   padding: 15px;
-  text-align: center;
-  text-decoration: none;
+  margin: 5px 0 22px 0;
   display: inline-block;
-  font-size: 15px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  width: 45%;
-}
-.b1{
-    background-color: #bd0808;
-    padding: 16px;
-}
-.b2 {
-  background-color: #4CAF50;
-  color: white;
-}
+  border: none;
+  background: #f1f1f1;}
 
-
-
-
-div.Ltext{
-    text-align:left;
-    
-}
-p{
-    font-size: 37px;
-}
-
-#menuToggle
+  .alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}
+  .alert h4{margin-top:0;color:inherit}.alert 
+  .alert-link{font-weight:700}.alert>p,.alert>ul{margin-bottom:0}
+  .alert>p+p{margin-top:5px}.alert-danger{
+  color:#a94442;
+  background-color:#f2dede;
+  border-color:#ebccd1
+  }
+  
+  #menuToggle
 {
   display: block;
   position: fixed;
@@ -223,99 +224,63 @@ p{
 </head>
 <body>
 <!--====form section start====-->
+<div class="bodycolor">
 <div class="user-detail">
-    <div class="Ltext">
-                                                <!--    Made by Erik Terwan    -->
+<!--    Made by Erik Terwan    -->
 <!--   24th of November 2015   -->
 <!--        MIT License        -->
 <nav role="navigation">
-    <div id="menuToggle">
-      <!--
-      A fake / hidden checkbox is used as click reciever,
-      so you can use the :checked selector on it.
-      -->
-      <input type="checkbox" />
-      
-      <!--
-      Some spans to act as a hamburger.
-      
-      They are acting like a real hamburger,
-      not that McDonalds stuff.
-      -->
-      <span></span>
-      <span></span>
-      <span></span>
-      
-      <!--
-      Too bad the menu has to be inside of the button
-      but hey, it's pure CSS magic.
-      -->
-      <ul id="menu">
-        <a href="/menu"><li>Menu</li></a>
-        <a href="/user/leave"><li>ลางาน</li></a>
-        <a href="/user/list-history"><li>ดูประวัติการลา</li></a>
-        <a href="/admin/list-leave"><li>อนุมัติการลา</li></a>
-        <a href="/admin/btn-user-list"><li>ดูข้อมูลพนักงาน</li></a>
-        <a href="/admin/register"><li>เพิ่มข้อมูลพนักงาน</li></a>
-        <a href="/user/changepass"><li>เปลี่ยนรหัสผ่าน</li></a>
-        <a href="/logout"><li>ออกจากระบบ</li></a>
-      </ul>
-    </div>
-  </nav>
-    <h2>ข้อมูลพนักงาน</h2>
-    <form>
-        <%
-        if(userData.length!=0){
-        var i=1;
-        userData.forEach(function(data){
-        %>
-            <p2>ชื่อ: <%=data.name%> <%=data.surname%></p> 
-            <p3>ชื่อภาษาอังกฤษ:  <%=data.name_eng%> <%=data.surname_eng%></p>  
-            <p5>รหัสพนักงาน:  <%=data.personnel_id%></p>
-            <p6>แผนก:  <%=data.department%></p> 
-            <p7>ตำแหน่ง:  <%=data.position%></p> 
-            <p8>Email:  <%=data.email%></p> 
-            <p9>เบอร์โทรศัพท์:  <%=data.tel_number%></p> 
-            <p10>ไอดีไลน์:  <%=data.line_id%></p>
-                <%  i++; }) %>
-                <% } else{ %>
-                    <div class="not-found">
-                        <p> Data not found</p>
-                    </div>
-                <% } %>
-            </form>
-            </div>  
-        <br>
-        <button class="button b1" onclick="deleted()">Disable</button> &puncsp; &puncsp;
-        <button class="button b2" onclick="window.location.href='/menu'">กลับสู่หน้าหลัก</button>
-    </div>
-
-<%
-if(userData.length!=0){
-var i=1;
-userData.forEach(function(data){
-%>
-<script>
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" />
     
-    function deleted() {
-        var txt;
-            var r = confirm("กรุณายืนยันการยกเลิกเป็นพนักงาน");
-         if (r == true) {
-    window.location.href='/admin/disable?Regis_ID=<%=data.Regis_ID%>'
-  } 
-        else {
-    txt = "You pressed Cancel!";
-  }
+    <!--
+    Some spans to act as a hamburger.
+    
+    They are acting like a real hamburger,
+    not that McDonalds stuff.
+    -->
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <!--
+    Too bad the menu has to be inside of the button
+    but hey, it's pure CSS magic.
+    -->
+    <ul id="menu">
+      <a href="/menu"><li>Menu</li></a>
+      <a href="/user/leave"><li>ลางาน</li></a>
+      <a href="/user/list-history"><li>ดูประวัติการลา</li></a>
+      <a href="/admin/list-leave"><li>อนุมัติการลา</li></a>
+      <a href="/admin/btn-user-list"><li>ดูข้อมูลพนักงาน</li></a>
+      <a href="/admin/register"><li>เพิ่มข้อมูลพนักงาน</li></a>
+      <a href="/user/changepass"><li>เปลี่ยนรหัสผ่าน</li></a>
+      <a href="/logout"><li>ออกจากระบบ</li></a>
+    </ul>
+  </div>
+</nav>
+    <h2>เปลี่ยนรหัสผ่าน</h2>
+    <form action="/user/changepassword" method="POST">
+      <% if(message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div> 
+       <% } %>
+          <input type="password" placeholder="Current password" name="Current_password" required maxlength="100">
+          <input type="password" placeholder="Password" name="password" required maxlength="100">
+          <input type="password" placeholder="Confirm Password" name="Con_password" required maxlength="100">
 
-    }
+
+          <button type="submit" onclick="return confirm('จะทำการเปลี่ยนรหัสผ่านหรือไม่')">Submit</button>
+        </form>
+
+        </div>
+      </div>
+<script>
 
 </script>
-<%  i++; }) %>
-<% } else{ %>
-    <div class="not-found">
-        <p> Data not found</p>
-    </div>
-<% } %>
 <!--====form section start====-->
 </body>
 </html>
