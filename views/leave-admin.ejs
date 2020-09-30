@@ -276,17 +276,17 @@ select{
     <h2>กรุณากรอกข้อมูลใบลางาน</h2>
     <form action="/user/insertleave" method="POST">
           <label>วันที่ลา</label> <br>
-          <input class="date" type="datetime-local" name="leave_date"> ถึง
-          <input class="date" type="datetime-local" name="to_date">
+          <input class="date" type="datetime-local" name="leave_date" required> ถึง
+          <input class="date" type="datetime-local" name="to_date" required>
           <label>ประเภทการลา</label>
-          <select name ="category" id="category">
+          <select name ="category" id="category" required>
             <option disabled selected value> -- select an option -- </option>
             <option value="ลากิจ">ลากิจ</option>
             <option value="ลาป่วย">ลาป่วย</option>
             <option value="ลาพักร้อน">ลาพักร้อน</option>
             <option value="ลาคลอด">ลาคลอด</option>
         </select>
-        <textarea class="message" name="cause" rows="15" cols="50" placeholder="หมายเหตุ"></textarea><br>
+        <textarea class="message" name="cause" rows="15" cols="50" placeholder="หมายเหตุ" required></textarea><br>
 
           <button type="submit" onclick="return confirm('จะทำการลาหรือไม่')">Submit</button>
         </form>

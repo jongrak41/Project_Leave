@@ -57,27 +57,36 @@ router.post('/insert', function(req, res, next){
               var sql=`SELECT * FROM register where reg_status = 'enable' and  username = ?`;
               connection.query(sql,[username], function (err, results) {
                 if(results.length == 0){
-                    if(password == Re_password){
-                      password = bcrypt.hashSync(password, null, null)
-                      var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
-                      +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
-                      connection.query(sql,function (err, data) {
-                        if (err) throw err;
-                              console.log("record inserted");
-                          });
-                      Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
-                      res.send(
-                        '<html>'   
-                          +'<script>'
-                          +'alert("บันทึกสำเร็จ");'
-                          +'location.replace("/menu")'  
-                        +'</script>'
-                      +'</html>')
+                  var sql=`SELECT * FROM register where personnel_id = ?`;
+                  connection.query(sql,[personnel_id], function (err, results) {
+                    if(results.length == 0){
+                      if(password == Re_password){
+                        password = bcrypt.hashSync(password, null, null)
+                        var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
+                        +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
+                        connection.query(sql,function (err, data) {
+                          if (err) throw err;
+                                console.log("record inserted");
+                            });
+                        Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
+                        res.send(
+                          '<html>'   
+                            +'<script>'
+                            +'alert("บันทึกสำเร็จ");'
+                            +'location.replace("/menu")'  
+                          +'</script>'
+                        +'</html>')
+                      }
+                      else{
+                        req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                        res.redirect('/admin/register') 
+                      }
                     }
                     else{
-                      req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                      req.flash('CheckRePassword','รหัสพนักงาน ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
                       res.redirect('/admin/register') 
                     }
+                  })
                 }
                 else{
                   req.flash('CheckRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
@@ -350,27 +359,36 @@ router.post('/Insert-Re-emp',function(req,res,next){
             var sql=`SELECT * FROM register where reg_status = 'enable' and  username = ?`;
             connection.query(sql,[username], function (err, results) {
               if(results.length == 0){
-                  if(password == Re_password){
-                    password = bcrypt.hashSync(password, null, null)
-                    var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
-                    +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
-                    connection.query(sql,function (err, data) {
-                      if (err) throw err;
-                            console.log("record inserted");
-                        });
-                    Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
-                    res.send(
-                      '<html>'   
-                        +'<script>'
-                        +'alert("บันทึกสำเร็จ");'
-                        +'location.replace("/menu")'  
-                      +'</script>'
-                    +'</html>')
+                var sql=`SELECT * FROM register where personnel_id = ?`;
+                connection.query(sql,[personnel_id], function (err, results) {
+                  if(results.length == 0){
+                    if(password == Re_password){
+                      password = bcrypt.hashSync(password, null, null)
+                      var sql = `INSERT INTO register (Regis_ID, personnel_id, name, surname, name_eng, surname_eng, position, department, email, line_id, tel_number, username, password, permission, date_register, date_disable, reg_status)`
+                      +`VALUES (NULL, '${personnel_id}', '${fname}', '${lname}', '${fname_en}', '${lanem_en}', '${position}', '${department}', '${email}', '${line_id}', '${tel}', '${username}', '${password}', '${permission}', NOW(), null, 'enable')`;
+                      connection.query(sql,function (err, data) {
+                        if (err) throw err;
+                              console.log("record inserted");
+                          });
+                      Linenotify(messageG ="นาย :"+fname+" "+lname+" รหัส "+personnel_id+" ได้ทำการลงทะเบียนเข้าสู่ระบบ")
+                      res.send(
+                        '<html>'   
+                          +'<script>'
+                          +'alert("บันทึกสำเร็จ");'
+                          +'location.replace("/menu")'  
+                        +'</script>'
+                      +'</html>')
+                    }
+                    else{
+                      req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                      res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
+                    }
                   }
                   else{
-                    req.flash('CheckRePassword','รหัสผ่านไม่ตรงกันกรุณาตรวจสอบ')
+                    req.flash('CheckRePassword','รหัสพนักงาน ถูกใช่้ไปแล้วกรุณาเปลี่ยน')
                     res.redirect(`/admin/viewoldemp?Regis_ID=${Regis_ID}`) 
                   }
+                })
               }
               else{
                 req.flash('CheckRePassword','Username ถูกใช่้ไปแล้วกรุณาเปลี่ยน')

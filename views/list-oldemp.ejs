@@ -222,7 +222,6 @@ input.b1{
 </style>
 </head>
 <body>
-    <form >
         <div class="textbox">
 <!--    Made by Erik Terwan    -->
 <!--   24th of November 2015   -->
@@ -261,15 +260,17 @@ input.b1{
     </ul>
   </div>
 </nav>
-            <h2>ข้อมูลพนักงานเก่า</h2>
+            <h2>ข้อมูลพนักงาน</h2>
      
+            <input class="Scan" type="text" id="myInput" onkeyup="myFunction()" placeholder="ค้นหารายชื่อ" title="Type in a name">
+    
             <%
             if(userData.length!=0){
             var i=1;
             userData.forEach(function(data){
             %>
             <ul id="myUL">
-            <li><a href="/admin/viewoldemp?Regis_ID=<%=data.Regis_ID %>"> <%=data.name%>  <%=data.surname%>  รหัส <%=data.personnel_id%></a></li>
+            <li class="myLinks"><a href="/admin/viewoldemp?Regis_ID=<%=data.Regis_ID %>"><%=data.name%>  <%=data.surname%>  รหัส <%=data.personnel_id%></a></li>
             </ul>
             <%  i++; }) %>
             <% } else{ %>
@@ -280,7 +281,7 @@ input.b1{
 
 </div>
 <br>
-
+<!-- <input class="b1" type="button" value="ลบข้อมูล" onclick="de()"> &nbsp; -->
 
 <script>
     function de(){
@@ -294,21 +295,21 @@ txt = "ยกเลิก";
 }
 
 function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("myUL");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
+var input, filter;
+input = document.getElementsByClassName('myLinks');
+filter = document.getElementById('myInput').value.toUpperCase();
+// Loop through all list items, and hide those who don't match the search query
+for (i = 0; i < input.length; i++) {
+    var currentElem = input[i];
+    var currentElemChild = input[i].children[0]
+    if (currentElemChild.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        currentElem.style.display = "";
+    } else {
+        currentElem.style.display = "none";
     }
+  }
 }
+document.getElementById('myInput').addEventListener('keyup', myFunction);
 </script>
 
 </body>
