@@ -120,13 +120,19 @@ router.get('/disable',isLoggedIn,function(req, res, next){
   var sql='UPDATE `register` SET `reg_status` = "disable", date_disable = NOW() WHERE `register`.`Regis_ID` = ?'; 
   connection.query(sql,req.query.Regis_ID, function (err, data, fields) {
   if (err) throw err;
-  res.redirect('/admin/btn-user-list');
 })
   connection.query('SELECT * FROM register where Regis_ID = ?',req.query.Regis_ID,function(err, result, fields){
     Object.keys(result).forEach(function(key) {
       var row = result[key];
       var name = row.name
       var surname = row.surname
+      res.send(
+        `<html>   
+          <script>
+          alert('ยกเลิก ${name} ${surname} จากการเป็นพนักงานสำเร็จ');
+          location.replace("/admin/btn-user-list")
+         </script>
+      </html>`)
       Linenotify(messageG ="ได้ทำการยกเลิก : "+name+" "+surname+" จากการเป็นพนักงาน")
   })
 })
